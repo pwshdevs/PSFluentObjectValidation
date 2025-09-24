@@ -10,7 +10,7 @@
     FunctionsToExport = @('Test-Exists', 'Assert-Exists')
     CmdletsToExport = @()
     VariablesToExport = '*'
-    AliasesToExport = @('exists', 'asserts')
+    AliasesToExport = @('exists', 'asserts', 'tests')
     PrivateData = @{
         PSData = @{
             Tags = @()
