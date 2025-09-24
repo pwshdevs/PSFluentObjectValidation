@@ -1,9 +1,11 @@
 # PSFluentObjectValidation: Complete Implementation Guide
 
 **Github**
+
 [![GitHub Actions Status][github-actions-badge]][github-actions-build] [![GitHub Actions Status][github-actions-badge-publish]][github-actions-build] [![GitHub Open Issues Status][github-open-issues-badge]][github-open-issues] [![GitHub Closed Issues Status][github-closed-issues-badge]][github-closed-issues] [![License][license-badge]][license]
 
 **PSGallery**
+
 [![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery]
 
 ## General Overview
