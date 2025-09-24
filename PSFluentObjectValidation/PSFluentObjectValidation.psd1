@@ -5,7 +5,7 @@
     Author = 'Joshua Wilson'
     CompanyName = 'PwshDevs'
     Copyright = '(c) 2025 PwshDevs. All rights reserved.'
-    Description = 'Contains a helper class and functions to validate object.'
+    Description = 'Contains a helper class and functions to validate objects.'
     PowerShellVersion = '5.1'
     FunctionsToExport = @('Test-Exists', 'Assert-Exists')
     CmdletsToExport = @()
@@ -13,8 +13,8 @@
     AliasesToExport = @('exists', 'asserts', 'tests')
     PrivateData = @{
         PSData = @{
-            Tags = @()
-            LicenseUri = ''
+            Tags = @('Validation', 'Object', 'Fluent', 'Helper', 'Assert', 'Test', 'Exists')
+            LicenseUri = 'https://github.com/pwshdevs/PSFluentObjectValidation/blob/main/LICENSE'
             ProjectUri = 'https://github.com/pwshdevs/PSFluentObjectValidation'
             ReleaseNotes = ''
         }
