@@ -4,7 +4,7 @@ function Assert-Exist {
         [Alias('In')]
         $InputObject,
         [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
-        [Alias('Width', 'Test')]
+        [Alias('With', 'Test')]
         [string]$Key
     )
 
