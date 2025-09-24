@@ -1,6 +1,6 @@
 @{
     RootModule = 'PSFluentObjectValidation.psm1'
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.1'
     GUID = '90ac3c83-3bd9-4da5-8705-7b82b21963c8'
     Author = 'Joshua Wilson'
     CompanyName = 'PwshDevs'
