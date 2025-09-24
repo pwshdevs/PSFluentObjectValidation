@@ -269,7 +269,7 @@ Based on 10,000 iterations with corrected V3-compatible scenario testing:
 | **Deep Array Access** | ❌ | ❌ | ❌ | ✅ | `products[0].category.name` |
 | **Error Handling** | Basic | Basic | Enhanced | Advanced | Bounds checking, null safety |
 
-[github-actions-badge]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/CI.yml/badge.svg
+[github-actions-badge]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/CI.yaml/badge.svg
 [github-actions-badge-publish]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/publish.yaml/badge.svg
 [github-actions-build]: https://github.com/pwshdevs/PSFluentObjectValidation/actions
 [psgallery-badge]: https://img.shields.io/powershellgallery/dt/PSFluentObjectValidation.svg
