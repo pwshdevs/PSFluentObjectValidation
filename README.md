@@ -1,5 +1,9 @@
 # PSFluentObjectValidation: Complete Implementation Guide
 
+| GitHub Actions                                                                                                                                        | PS Gallery                                          | License                              |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|--------------------------------------|
+| [![GitHub Actions Status][github-actions-badge]][github-actions-build] [![GitHub Actions Status][github-actions-badge-publish]][github-actions-build] | [![PowerShell Gallery][psgallery-badge]][psgallery] | [![License][license-badge]][license] |
+
 ## General Overview
 
 The PSFluentObjectValidation represents a comprehensive evolution from simple property validation to a high-performance, feature-rich validation engine with advanced array indexing capabilities.
@@ -264,3 +268,11 @@ Based on 10,000 iterations with corrected V3-compatible scenario testing:
 | **Array + Validation** | ❌ | ❌ | ❌ | ✅ | `users[*].email!` (all non-empty) |
 | **Deep Array Access** | ❌ | ❌ | ❌ | ✅ | `products[0].category.name` |
 | **Error Handling** | Basic | Basic | Enhanced | Advanced | Bounds checking, null safety |
+
+[github-actions-badge]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/CI.yml/badge.svg
+[github-actions-badge-publish]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/publish.yaml/badge.svg
+[github-actions-build]: https://github.com/pwshdevs/PSFluentObjectValidation/actions
+[psgallery-badge]: https://img.shields.io/powershellgallery/dt/PSFluentObjectValidation.svg
+[psgallery]: https://www.powershellgallery.com/packages/PSFluentObjectValidation
+[license-badge]: https://img.shields.io/github/license/pwshdevs/PSFluentObjectValidation.svg
+[license]: https://raw.githubusercontent.com/pwshdevs/PSFluentObjectValidation/main/LICENSE
