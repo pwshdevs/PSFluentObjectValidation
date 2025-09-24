@@ -1,8 +1,12 @@
 # PSFluentObjectValidation: Complete Implementation Guide
 
-| GitHub Actions                                                                                                                                        | PS Gallery                                          | License                              |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|--------------------------------------|
-| [![GitHub Actions Status][github-actions-badge]][github-actions-build] [![GitHub Actions Status][github-actions-badge-publish]][github-actions-build] | [![PowerShell Gallery][psgallery-badge]][psgallery] | [![License][license-badge]][license] |
+**Github**
+
+[![GitHub Actions Status][github-actions-badge]][github-actions-build] [![GitHub Actions Status][github-actions-badge-publish]][github-actions-build] [![GitHub Open Issues Status][github-open-issues-badge]][github-open-issues] [![GitHub Closed Issues Status][github-closed-issues-badge]][github-closed-issues] [![License][license-badge]][license]
+
+**PSGallery**
+
+[![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery]
 
 ## General Overview
 
@@ -269,10 +273,15 @@ Based on 10,000 iterations with corrected V3-compatible scenario testing:
 | **Deep Array Access** | ❌ | ❌ | ❌ | ✅ | `products[0].category.name` |
 | **Error Handling** | Basic | Basic | Enhanced | Advanced | Bounds checking, null safety |
 
-[github-actions-badge]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/CI.yaml/badge.svg
-[github-actions-badge-publish]: https://github.com/pwshdevs/PSFluentObjectValidation/actions/workflows/publish.yaml/badge.svg
+[github-actions-badge]: https://img.shields.io/github/actions/workflow/status/pwshdevs/PSFluentObjectValidation/CI.yaml?label=build&style=for-the-badge
+[github-actions-badge-publish]: https://img.shields.io/github/actions/workflow/status/pwshdevs/PSFluentObjectValidation/publish.yaml?label=publish&style=for-the-badge
 [github-actions-build]: https://github.com/pwshdevs/PSFluentObjectValidation/actions
-[psgallery-badge]: https://img.shields.io/powershellgallery/dt/PSFluentObjectValidation.svg
+[psgallery-badge]: https://img.shields.io/powershellgallery/dt/PSFluentObjectValidation?label=downloads&style=for-the-badge
 [psgallery]: https://www.powershellgallery.com/packages/PSFluentObjectValidation
-[license-badge]: https://img.shields.io/github/license/pwshdevs/PSFluentObjectValidation.svg
+[psgallery-version-badge]: https://img.shields.io/powershellgallery/v/PSFluentObjectValidation?label=version&style=for-the-badge
+[license-badge]: https://img.shields.io/github/license/pwshdevs/PSFluentObjectValidation?style=for-the-badge
 [license]: https://raw.githubusercontent.com/pwshdevs/PSFluentObjectValidation/main/LICENSE
+[github-open-issues-badge]: https://img.shields.io/github/issues/pwshdevs/PSFluentObjectValidation?style=for-the-badge
+[github-closed-issues-badge]: https://img.shields.io/github/issues-closed/pwshdevs/PSFluentObjectValidation?style=for-the-badge
+[github-closed-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues?q=is%3Aissue%20state%3Aclosed
+[github-open-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues
