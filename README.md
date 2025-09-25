@@ -6,29 +6,27 @@
 
 **PSGallery**
 
-[![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery]
+[![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery] [![PSGallery Playform][psgallery-platform-badge]][psgallery] [![PSGallery Playform][ps-desktop-badge]][psgallery]
 
 ## General Overview
-
-The PSFluentObjectValidation represents a comprehensive evolution from simple property validation to a high-performance, feature-rich validation engine with advanced array indexing capabilities.
 
 ## Installation
 
 ```powershell
 Install-PSResource -Name PSFluentObjectValidation
-# or
-Install-Module -Name PSFluentObjectValidation
+```
 
-# Verify installation (long style)
-Test-Exists -in @{ test = "value" } -with "test!"
-# (short hand)
-exists -with "test!" -in @{ test = "value" }
-# or alternative
-tests -with "test!" -in @{ test = "value" }
-# or if you'd rather have thrown errors
-Assert-Exists -in @{ test = "value" } -with "test!"
-# or you can use a short hand version
-asserts -with "test!" -in @{ test = "value" }
+or
+
+```powershell
+Install-Module -Name PSFluentObjectValidation
+```
+
+Once installed, you can run a couple of tests to verify it works as expected:
+
+```powershell
+# Verify installation
+Test-Exist -In @{ test = "value" } -With "test!"
 # Should return: True
 ```
 
@@ -37,18 +35,23 @@ asserts -with "test!" -in @{ test = "value" }
 ### Basic Property Access
 
 ```powershell
-exists -with "user.name" -in $data              # Simple property
-exists -with "user.profile.age" -in $data       # Nested objects
-exists -with "config.db.host" -in $data         # Deep nesting
+Test-Exist -With "user.name" -In $data              # Simple property
+Test-Exist -With "user.profile.age" -In $data       # Nested objects
+Test-Exist -With "config.db.host" -In $data         # Deep nesting
 ```
 
-As an example, you would normally test this like so
+As an example, you would normally test this like so:
+
 ```powershell
-if(-not $data.user -or -not $data.user.name -or -not $data.user.profile -or -not $data.user.profile.age) {
+if(-not $data.user -or -not $data.user.name -or [string]::IsNullOrWhitespace($data.user.name) -or -not $data.user.profile -or -not $data.user.profile.age) {
     # do something when any of these fields do not exist
 }
-# vs. PSFluentObjectValidation
-if(-not (exists -with "user.name" -in $data) -or -not (exists -with "user.profile.age" -in $data)) {
+```
+
+vs. PSFluentObjectValidation
+
+```powershell
+if(-not (Test-Exist -With "user.name!" -In $data) -or -not (Test-Exist -With "user.profile.age" -In $data)) {
     # do something when any of these fields do not exist
 }
 ```
@@ -57,33 +60,33 @@ if(-not (exists -with "user.name" -in $data) -or -not (exists -with "user.profil
 ### Validation Suffixes
 
 ```powershell
-exists -with "user.email!" -in $data            # Non-empty validation
-exists -with "user.profile?" -in $data          # Object existence
-exists -with "settings.theme!" -in $data        # Non-empty string
+Test-Exist -With "user.email!" -In $data            # Non-empty validation
+Test-Exist -With "user.profile?" -In $data          # Object existence
+Test-Exist -With "settings.theme!" -In $data        # Non-empty string
 ```
 
 ### Array Indexing
 
 ```powershell
-exists -with "users[0].name" -in $data         # First element
-exists -with "users[1].email" -in $data        # Second element
-exists -with "products[2].title" -in $data     # Third element
+Test-Exist -With "users[0].name" -In $data         # First element
+Test-Exist -With "users[1].email" -In $data        # Second element
+Test-Exist -With "products[2].title" -In $data     # Third element
 ```
 
 ### Wildcard Array Validation
 
 ```powershell
-exists -with "users[*].name" -in $data          # All users have names
-exists -with "users[*].email!" -in $data        # All users have non-empty emails
-exists -with "products[*].active" -in $data     # All products have active property
+Test-Exist -With "users[*].name" -In $data          # All users have names
+Test-Exist -With "users[*].email!" -In $data        # All users have non-empty emails
+Test-Exist -With "products[*].active" -In $data     # All products have active property
 ```
 
 ### Advanced Combinations
 
 ```powershell
-exists -with "users[0].profile.settings.theme!" -in $data    # Deep + validation
-exists -with "products[*].category.name!" -in $data          # Wildcard + deep + validation
-exists -with "orders[1].items[*].price" -in $data            # Nested array access
+Test-Exist -With "users[0].profile.settings.theme!" -In $data    # Deep + validation
+Test-Exist -With "products[*].category.name!" -In $data          # Wildcard + deep + validation
+Test-Exist -With "orders[1].items[*].price" -In $data            # Nested array access
 ```
 
 ## Usage Examples
@@ -105,13 +108,13 @@ $apiResponse = @{
 }
 
 # Validate all users have required fields
-exists -in $apiResponse -with "users[*].id"      # All users have IDs
-exists -in $apiResponse -with "users[*].name!"   # All users have non-empty names
-exists -in $apiResponse -with "users[*].email!"  # All users have non-empty emails
+Test-Exist -In $apiResponse -With "users[*].id"      # All users have IDs
+Test-Exist -In $apiResponse -With "users[*].name!"   # All users have non-empty names
+Test-Exist -In $apiResponse -With "users[*].email!"  # All users have non-empty emails
 
 # Validate specific user data
-exists -in $apiResponse -with "users[0].active"  # First user has active status
-exists -in $apiResponse -with "metadata.total!"  # Metadata has non-empty total
+Test-Exist -In $apiResponse -With "users[0].active"  # First user has active status
+Test-Exist -In $apiResponse -With "metadata.total!"  # Metadata has non-empty total
 ```
 
 #### Configuration Validation
@@ -133,10 +136,10 @@ $config = @{
 }
 
 # Validate critical configuration
-exists -in $config -with "database.host!"                    # Non-empty host
-exists -in $config -with "database.credentials.password!"    # Non-empty password
-exists -in $config -with "servers[*].name!"                  # All servers have names
-exists -in $config -with "servers[*].ip!"                    # All servers have IPs
+Test-Exist -In $config -With "database.host!"                    # Non-empty host
+Test-Exist -In $config -With "database.credentials.password!"    # Non-empty password
+Test-Exist -In $config -With "servers[*].name!"                  # All servers have names
+Test-Exist -In $config -With "servers[*].ip!"                    # All servers have IPs
 ```
 
 #### E-commerce Data Validation
@@ -155,11 +158,11 @@ $order = @{
 }
 
 # Comprehensive order validation
-exists -in $order -with "id!"                      # Order has ID
-exists -in $order -with "customer.email!"          # Customer has email
-exists -in $order -with "items[*].sku!"            # All items have SKUs
-exists -in $order -with "items[*].price"           # All items have prices
-exists -in $order -with "items[0].quantity"        # First item has quantity
+Test-Exist -In $order -With "id!"                      # Order has ID
+Test-Exist -In $order -With "customer.email!"          # Customer has email
+Test-Exist -In $order -With "items[*].sku!"            # All items have SKUs
+Test-Exist -In $order -With "items[*].price"           # All items have prices
+Test-Exist -In $order -With "items[0].quantity"        # First item has quantity
 ```
 
 ## Error Handling & Edge Cases
@@ -170,108 +173,43 @@ exists -in $order -with "items[0].quantity"        # First item has quantity
 
 ```powershell
 # Array bounds checking
-tests -in $data -with "users[10].name"           # Returns false for out-of-bounds
-asserts -in $data -with "users[10].name"         # Throws: "Array index [10] is out of bounds"
+Test-Exist -In $data -With "users[10].name"           # Returns false for out-of-bounds
+Assert-Exist -In $data -With "users[10].name"         # Throws: "Array index [10] is out of bounds"
 
 # Null safety
-tests -in $data -with "user.profile.settings"    # Handles null intermediate objects
-asserts -in $data -with "missing.property"       # Throws: "Property 'missing' does not exist"
+Test-Exist -In $data -With "user.profile.settings"    # Handles null intermediate objects
+Assert-Exist -In $data -With "missing.property"       # Throws: "Property 'missing' does not exist"
 
 # Type validation
-tests -in $data -with "config.port[0]"          # Throws: "Property 'port' is not an array"
+Test-Exist -In $data -With "config.port[0]"          # Throws: "Property 'port' is not an array"
 ```
 
 #### Wildcard Validation Error Handling
 
 ```powershell
 # Empty array validation
-Test-Exists @{ users = @() } "users[*].name"       # Throws: "Array 'users' is empty"
+Test-Exist -In @{ users = @() } -With "users[*].name"       # Throws: "Array 'users' is empty"
 
 # Partial validation failures
-Test-Exists $data "users[*].email!"                # Validates ALL users have non-empty emails
-Assert-Exists $data "users[*].phone!"              # Throws if ANY user lacks phone
+Test-Exist -In $data -With "users[*].email!"                # Validates ALL users have non-empty emails
+Assert-Exist -In $data -With "users[*].phone!"              # Throws if ANY user lacks phone
 ```
 
 ### Function Reference
 
-#### `Test-Exists` or `tests` or `exists`
+#### `Test-Exist`
 
-**Purpose**: Safely test property existence and validation
-**Syntax**: `Test-Exists $object $propertyPath`
-**Returns**: `$true` if validation passes, `$false` otherwise
-**Error Handling**: Never throws exceptions
+> **Purpose Safely**: test property existence and validation<br>
+> **Syntax**: `Test-Exist -In $object -With $propertyPath`<br>
+> **Returns**: `$true` if validation passes, `$false` otherwise<br>
+> **Error Handling**: Never throws exceptions<br>
 
-#### `Assert-Exists` or `asserts`
+#### `Assert-Exist`
 
-**Purpose**: Assert property existence with detailed error reporting
-**Syntax**: `Assert-Exists $object $propertyPath`
-**Returns**: `void` (throws on failure)
-**Error Handling**: Throws descriptive exceptions for debugging
-
-### Advanced Configuration
-
-#### Performance Tuning
-
-- **Warmup Iterations**: Recommended 1000+ for consistent measurements
-- **Test Iterations**: 10,000+ for statistical significance
-- **Memory Management**: Automatic garbage collection handling
-
-#### Debugging Support
-
-- **Verbose Error Messages**: Detailed exception information
-- **Stack Trace Preservation**: Full error context maintenance
-- **Development Mode**: Additional validation checks available
-
-## Future Roadmap
-
-### Potential Enhancements
-
-1. **Dynamic Array Slicing**: `users[1:3].name` syntax
-2. **Conditional Validation**: `users[active=true].email!` filtering
-3. **Performance Profiling**: Built-in benchmarking tools
-4. **Visual Studio Code Extension**: IntelliSense support for validation syntax
-
-### Performance Targets
-
-- **Sub-10μs Operations**: Further C# optimization
-- **Parallel Validation**: Multi-threaded wildcard processing
-- **Memory Optimization**: Zero-allocation validation paths
-
-## Performance Results Overview
-
-### Performance Comparison
-
-Originally this module was written in pure powershell but comparing it against just standard manual testing showed it was very slow (in micro seconds, still fairly quick overall). The the module was rewritten to use a different format for testing, which improved performance but it was still relatively slow compared to just manual validation. The module was then implemented in C# and saw significate performance improvements over even manual processing. The module was updated a 4th time to handle arrays as there are times when its better to test before looping with | ForEach-Object. Below is a series of tests written against all 5 methods.
-
-Based on 10,000 iterations with corrected V3-compatible scenario testing:
-
-| Version | Average Performance | vs Manual | Technology | Array Support |
-|---------|-------------------|-----------|------------|---------------|
-| **Manual Validation** | 59.68 μs | ±0% | Native PowerShell | Limited |
-| **V1 (PowerShell)** | 352.48 μs | +491% | Pure PowerShell | ❌ |
-| **V2 (PowerShell)** | 318.71 μs | +434% | Pure PowerShell | ❌ |
-| **V3 (C# Basic)** | **13.06 μs** | **-78.1%** | C# Compiled | ❌ |
-| **V4 (C# Current)** | **13.86 μs** | **-76.8%** | C# + Array Logic | ✅ |
-
-### Performance Highlights
-
-- **V3**: **78.1% faster** than manual validation - C# performance breakthrough
-- **V4**: **76.8% faster** than manual validation with revolutionary array features
-- **V4 vs V3**: Only **6.1% slower** - excellent trade-off for massive feature expansion
-- **Both C# versions**: **27x faster** than V1, **23x faster** than V2
-
-## Features & Capabilities Matrix
-
-| Feature | V1 | V2 | V3 | V4 | Description |
-|---------|----|----|----|----|-------------|
-| **Basic Properties** | ✅ | ✅ | ✅ | ✅ | `user.name`, `config.host` |
-| **Validation Suffixes** | ✅ | ✅ | ✅ | ✅ | `property!` (non-empty), `property?` (exists) |
-| **Nested Navigation** | ✅ | ✅ | ✅ | ✅ | `user.profile.settings.theme` |
-| **Array Indexing** | ❌ | ❌ | ❌ | ✅ | `users[0].name`, `products[1].title` |
-| **Wildcard Arrays** | ❌ | ❌ | ❌ | ✅ | `users[*].name` (all elements) |
-| **Array + Validation** | ❌ | ❌ | ❌ | ✅ | `users[*].email!` (all non-empty) |
-| **Deep Array Access** | ❌ | ❌ | ❌ | ✅ | `products[0].category.name` |
-| **Error Handling** | Basic | Basic | Enhanced | Advanced | Bounds checking, null safety |
+> **Purpose**: Assert property existence with detailed error reporting<br>
+> **Syntax**: `Assert-Exist -In $object -With $propertyPath`<br>
+> **Returns**: `void` (throws on failure)<br>
+> **Error Handling**: Throws descriptive exceptions for debugging<br>
 
 [github-actions-badge]: https://img.shields.io/github/actions/workflow/status/pwshdevs/PSFluentObjectValidation/CI.yaml?label=build&style=for-the-badge
 [github-actions-badge-publish]: https://img.shields.io/github/actions/workflow/status/pwshdevs/PSFluentObjectValidation/publish.yaml?label=publish&style=for-the-badge
@@ -285,3 +223,6 @@ Based on 10,000 iterations with corrected V3-compatible scenario testing:
 [github-closed-issues-badge]: https://img.shields.io/github/issues-closed/pwshdevs/PSFluentObjectValidation?style=for-the-badge
 [github-closed-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues?q=is%3Aissue%20state%3Aclosed
 [github-open-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues
+[psgallery-platform-badge]: https://img.shields.io/powershellgallery/p/PSFluentObjectValidation?style=for-the-badge
+[ps-desktop-badge]: https://img.shields.io/badge/powershell-5.1,_7.0+-blue?style=for-the-badge
+[ps-core-badge]: https://img.shields.io/badge/powershell-5.1,_7.0+-blue?style=for-the-badge
