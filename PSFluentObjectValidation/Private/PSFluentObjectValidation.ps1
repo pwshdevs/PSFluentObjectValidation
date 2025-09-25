@@ -48,7 +48,7 @@ public static class PSFluentObjectValidation
             WildcardArrayWrapper wrapper = (WildcardArrayWrapper)currentObject;
             return ProcessWildcardPropertyAccess(wrapper.ArrayObject, part);
         }
-        
+
         // Check for array indexing: property[index] or property[*]
         Match arrayMatch = ArrayIndexPattern.Match(part);
         if (arrayMatch.Success)
@@ -232,13 +232,13 @@ public static class PSFluentObjectValidation
 
     private static object ProcessWildcardPropertyAccess(object arrayObject, string propertyName)
     {
-        // First check if this is an array indexing pattern: property[index] or property[*]  
+        // First check if this is an array indexing pattern: property[index] or property[*]
         Match arrayMatch = ArrayIndexPattern.Match(propertyName);
         if (arrayMatch.Success)
         {
             string basePropertyName = arrayMatch.Groups[1].Value;
             string indexStr = arrayMatch.Groups[2].Value;
-            
+
             // Handle array indexing after wildcard: items[0], tags[*], etc.
             if (arrayObject is Array)
             {
@@ -248,21 +248,21 @@ public static class PSFluentObjectValidation
                     object element = array.GetValue(i);
                     if (element == null)
                         throw new InvalidOperationException(String.Format("Array element [{0}] is null", i));
-                    
+
                     if (!HasProperty(element, basePropertyName))
                         throw new InvalidOperationException(String.Format("Array element [{0}] does not have property '{1}'", i, basePropertyName));
-                    
+
                     object propertyValue = GetProperty(element, basePropertyName);
                     if (propertyValue == null)
                         throw new InvalidOperationException(String.Format("Property '{0}' in element [{1}] is null", basePropertyName, i));
                     if (!IsArrayLike(propertyValue))
                         throw new InvalidOperationException(String.Format("Property '{0}' in element [{1}] is not an array", basePropertyName, i));
                 }
-                
+
                 // All elements are valid, now handle the indexing
                 object firstElement = array.GetValue(0);
                 object firstPropertyValue = GetProperty(firstElement, basePropertyName);
-                
+
                 if (indexStr == "*")
                 {
                     return new WildcardArrayWrapper(firstPropertyValue);
@@ -273,7 +273,7 @@ public static class PSFluentObjectValidation
                     int count = GetCount(firstPropertyValue);
                     if (index < 0 || index >= count)
                         throw new InvalidOperationException(String.Format("Array index [{0}] is out of bounds for property '{1}' (length: {2})", index, basePropertyName, count));
-                    
+
                     if (firstPropertyValue is Array)
                     {
                         Array firstArray = (Array)firstPropertyValue;
@@ -286,7 +286,7 @@ public static class PSFluentObjectValidation
                     }
                 }
             }
-            
+
             if (arrayObject is IList)
             {
                 IList list = (IList)arrayObject;
@@ -297,18 +297,18 @@ public static class PSFluentObjectValidation
                         throw new InvalidOperationException(String.Format("Array element [{0}] is null", i));
                     if (!HasProperty(element, basePropertyName))
                         throw new InvalidOperationException(String.Format("Array element [{0}] does not have property '{1}'", i, basePropertyName));
-                    
+
                     object propertyValue = GetProperty(element, basePropertyName);
                     if (propertyValue == null)
                         throw new InvalidOperationException(String.Format("Property '{0}' in element [{1}] is null", basePropertyName, i));
                     if (!IsArrayLike(propertyValue))
                         throw new InvalidOperationException(String.Format("Property '{0}' in element [{1}] is not an array", basePropertyName, i));
                 }
-                
+
                 // All elements are valid, now handle the indexing
                 object firstElement = list[0];
                 object firstPropertyValue = GetProperty(firstElement, basePropertyName);
-                
+
                 if (indexStr == "*")
                 {
                     return new WildcardArrayWrapper(firstPropertyValue);
@@ -319,7 +319,7 @@ public static class PSFluentObjectValidation
                     int count = GetCount(firstPropertyValue);
                     if (index < 0 || index >= count)
                         throw new InvalidOperationException(String.Format("Array index [{0}] is out of bounds for property '{1}' (length: {2})", index, basePropertyName, count));
-                    
+
                     if (firstPropertyValue is Array)
                     {
                         Array firstArray = (Array)firstPropertyValue;
@@ -332,7 +332,7 @@ public static class PSFluentObjectValidation
                     }
                 }
             }
-            
+
             throw new InvalidOperationException(String.Format("Cannot process wildcard array indexing on type {0}", arrayObject.GetType().Name));
         }
 

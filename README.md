@@ -6,7 +6,7 @@
 
 **PSGallery**
 
-[![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery]
+[![PowerShell Gallery][psgallery-badge]][psgallery] [![PSGallery Version][psgallery-version-badge]][psgallery] [![PSGallery Playform][psgallery-platform-badge]][psgallery] [![PSGallery Playform][ps-desktop-badge]][psgallery]
 
 ## General Overview
 
@@ -223,3 +223,6 @@ Assert-Exist -In $data -With "users[*].phone!"              # Throws if ANY user
 [github-closed-issues-badge]: https://img.shields.io/github/issues-closed/pwshdevs/PSFluentObjectValidation?style=for-the-badge
 [github-closed-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues?q=is%3Aissue%20state%3Aclosed
 [github-open-issues]: https://github.com/pwshdevs/PSFluentObjectValidation/issues
+[psgallery-platform-badge]: https://img.shields.io/powershellgallery/p/PSFluentObjectValidation?style=for-the-badge
+[ps-desktop-badge]: https://img.shields.io/badge/powershell-5.1,_7.0+-blue?style=for-the-badge
+[ps-core-badge]: https://img.shields.io/badge/powershell-5.1,_7.0+-blue?style=for-the-badge

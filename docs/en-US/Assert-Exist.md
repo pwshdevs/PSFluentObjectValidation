@@ -24,21 +24,24 @@ If the validation fails, it throws a detailed exception, making it suitable for 
 
 ### EXAMPLE 1
 ```
-# Validate that the `user.name` property exists and is non-empty
 Assert-Exist -InputObject $data -Key "user.name!"
 ```
 
+Asserts that the \`user.name\` property exists and is non-empty
+
 ### EXAMPLE 2
 ```
-# Validate that all users in the array have a non-empty email
 Assert-Exist -InputObject $data -Key "users[*].email!"
 ```
 
+Asserts that all users in the array have a non-empty email
+
 ### EXAMPLE 3
 ```
-# Validate that the `settings.theme` property exists
 Assert-Exist -InputObject $data -Key "settings.theme"
 ```
+
+Asserts that the \`settings.theme\` property exists
 
 ## PARAMETERS
 

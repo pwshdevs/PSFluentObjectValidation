@@ -17,17 +17,17 @@ The property path to validate. Supports fluent syntax with validation operators:
 - `array[*]` - Wildcard validation (all elements must pass)
 
 .EXAMPLE
-# Test if the `user.name` property exists and is non-empty
 Test-Exist -InputObject $data -Key "user.name!"
 
+Tests that the `user.name` property exists and is non-empty.
 .EXAMPLE
-# Test if all users in the array have a non-empty email
 Test-Exist -InputObject $data -Key "users[*].email!"
 
+Tests that all users in the array have a non-empty email.
 .EXAMPLE
-# Test if the `settings.theme` property exists
 Test-Exist -InputObject $data -Key "settings.theme"
 
+Tests that the `settings.theme` property exists.
 .NOTES
 Returns `$true` if the validation passes, `$false` otherwise. Use `Assert-Exist` for a throwing alternative.
 
@@ -44,7 +44,10 @@ Function Test-Exist {
         [string]$Key
     )
 
-    return [PSFluentObjectValidation]::TestExists($InputObject, $Key)
+    Begin { }
+    Process {
+        return [PSFluentObjectValidation]::TestExists($InputObject, $Key)
+    }
 }
 
 New-Alias -Name exists -Value Test-Exist

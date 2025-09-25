@@ -24,21 +24,24 @@ Unlike \`Assert-Exist\`, this function does not throw exceptions; instead, it re
 
 ### EXAMPLE 1
 ```
-# Test if the `user.name` property exists and is non-empty
 Test-Exist -InputObject $data -Key "user.name!"
 ```
 
+Tests that the \`user.name\` property exists and is non-empty.
+
 ### EXAMPLE 2
 ```
-# Test if all users in the array have a non-empty email
 Test-Exist -InputObject $data -Key "users[*].email!"
 ```
 
+Tests that all users in the array have a non-empty email.
+
 ### EXAMPLE 3
 ```
-# Test if the `settings.theme` property exists
 Test-Exist -InputObject $data -Key "settings.theme"
 ```
+
+Tests that the \`settings.theme\` property exists.
 
 ## PARAMETERS
 

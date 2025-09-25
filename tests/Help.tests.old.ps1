@@ -1,10 +1,14 @@
 # Taken with love from @juneb_get_help (https://raw.githubusercontent.com/juneb/PesterTDD/master/Module.Help.Tests.ps1)
 
 BeforeDiscovery {
+
     function global:FilterOutCommonParams {
         param ($Params)
-        $commonParams = [System.Management.Automation.PSCmdlet]::OptionalCommonParameters +
-            [System.Management.Automation.PSCmdlet]::CommonParameters
+        $commonParams = @(
+            'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable',
+            'OutBuffer', 'OutVariable', 'PipelineVariable', 'Verbose', 'WarningAction',
+            'WarningVariable', 'Confirm', 'Whatif'
+        )
         $params | Where-Object { $_.Name -notin $commonParams } | Sort-Object -Property Name -Unique
     }
 
@@ -12,12 +16,12 @@ BeforeDiscovery {
     $outputDir            = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
     $outputModDir         = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
     $outputModVerDir      = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
-    $global:outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
 
     # Get module commands
     # Remove all versions of the module from the session. Pester can't handle multiple versions.
     Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
-    Import-Module -Name $global:outputModVerManifest -Verbose:$false -ErrorAction Stop -Force
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
     $params = @{
         Module      = (Get-Module $env:BHProjectName)
         CommandType = [System.Management.Automation.CommandTypes[]]'Cmdlet, Function' # Not alias
@@ -27,39 +31,30 @@ BeforeDiscovery {
     }
     $commands = Get-Command @params
 
-    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
     ## When testing help, remember that help is cached at the beginning of each session.
     ## To test, restart session.
-}
-
-AfterAll {
-    Remove-Item Function:/FilterOutCommonParams
 }
 
 Describe "Test help for <_.Name>" -ForEach $commands {
 
     BeforeDiscovery {
         # Get command help, parameters, and links
-        Import-Module -Name $global:outputModVerManifest -Verbose:$false -ErrorAction Stop -Force
         $command               = $_
-        $commandHelp           = Get-Help "$($env:BHProjectName)\$($command.Name)" -ErrorAction SilentlyContinue
+        $commandHelp           = Get-Help $command.Name -ErrorAction SilentlyContinue
         $commandParameters     = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
         $helpLinks             = $commandHelp.relatedLinks.navigationLink.uri
-        Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
     }
 
     BeforeAll {
         # These vars are needed in both discovery and test phases so we need to duplicate them here
-        Import-Module -Name $global:outputModVerManifest -Verbose:$false -ErrorAction Stop -Force
         $command                = $_
         $commandName            = $_.Name
-        $commandHelp            = Get-Help "$($env:BHProjectName)\$($command.Name)" -ErrorAction SilentlyContinue
+        $commandHelp            = Get-Help $command.Name -ErrorAction SilentlyContinue
         $commandParameters      = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames  = $commandParameters.Name
         $helpParameters         = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
         $helpParameterNames     = $helpParameters.Name
-        Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
     }
 
     # If help is not found, synopsis in auto-generated help is the syntax diagram
